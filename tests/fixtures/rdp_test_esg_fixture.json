@@ -1,0 +1,249 @@
+{
+  "links": {
+    "count": 5
+  },
+  "variability": "variable",
+  "universe": [
+    {
+      "Instrument": "TEST.RIC",
+      "Company Common Name": "TEST ESG Data",
+      "Organization PermID": "XXXXXXXXXX",
+      "Reporting Currency": "USD"
+    }
+  ],
+  "data": [
+    [
+      "TEST.RIC",
+      "2021-12-31",
+      99.9999999999999,
+      99.9999999999999,
+      100,
+      99.9999999999999,
+      "A+",
+      "A",
+      "A",
+      100,
+      "Test 1",
+      "2022-06-23T00:00:00"
+    ],
+    [
+      "TEST.RIC",
+      "2020-12-31",
+      99.9999999999999,
+      99.9999999999999,
+      88.75,
+      99.9999999999999,
+      "B",
+      "B-",
+      "B",
+      100,
+      "TEST 2",
+      "2022-06-23T00:00:00"
+    ],
+    [
+      "TEST.RIC",
+      "2019-12-31",
+      99.9999999999999,
+      99.9999999999999,
+      100,
+      99.9999999999999,
+      "C+",
+      "C",
+      "C",
+      100,
+      "TEST 3",
+      "2022-06-17T00:00:00"
+    ],
+    [
+      "TEST.RIC",
+      "2018-12-31",
+      99.9999999999999,
+      99.9999999999999,
+      100,
+      86.0256374965415,
+      "D",
+      "D",
+      "D-",
+      100,
+      "TEST 4",
+      "2022-06-17T00:00:00"
+    ],
+    [
+      "TEST.RIC",
+      "2017-12-31",
+      99.9999999999999,
+      59.7382247195132,
+      82.5,
+      99.9999999999999,
+      "A+",
+      "B+",
+      "A-",
+      100,
+      "TEST 5",
+      "2022-06-17T00:00:00"
+    ]
+  ],
+  "messages": {
+    "codes": [
+      [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    ],
+    "descriptions": [
+      {
+        "code": -2,
+        "description": "empty"
+      },
+      {
+        "code": -1,
+        "description": "ok"
+      }
+    ]
+  },
+  "headers": [
+    {
+      "name": "instrument",
+      "title": "Instrument",
+      "type": "string",
+      "description": "TEST description"
+    },
+    {
+      "name": "periodenddate",
+      "title": "Period End Date",
+      "type": "date",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 1",
+      "title": "ESG Score",
+      "type": "number",
+      "decimalChar": ".",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 2",
+      "title": "ESG Combined Score",
+      "type": "number",
+      "decimalChar": ".",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 4",
+      "title": "ESG Controversies Score",
+      "type": "number",
+      "decimalChar": ".",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 5",
+      "title": "TEST 5 Pillar Score",
+      "type": "number",
+      "decimalChar": ".",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 6",
+      "title": "TEST 6 Score Grade",
+      "type": "string",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 7",
+      "title": "TEST 7 Score Grade",
+      "type": "string",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 8",
+      "title": "TEST 8 Score Grade",
+      "type": "string",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 9",
+      "title": "TEST 9 Scope",
+      "type": "number",
+      "decimalChar": ".",
+      "description": "TEST description"
+    },
+    {
+      "name": "ExternalAuditName",
+      "title": "ESG Report Auditor Name",
+      "type": "string",
+      "description": "TEST description"
+    },
+    {
+      "name": "TEST 10 - Date",
+      "title": "TEST 10 Last Update Date",
+      "type": "datetime",
+      "description": "TEST description"
+    }
+  ]
+}

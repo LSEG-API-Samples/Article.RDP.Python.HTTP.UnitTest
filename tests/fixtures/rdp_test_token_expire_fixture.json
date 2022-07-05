@@ -1,0 +1,8 @@
+{
+    "error": {
+        "id": "XXXXXXXXXX",
+        "code": "401",
+        "message": "token expired",
+        "status": "Unauthorized"
+    }
+}

@@ -1,0 +1,11 @@
+.env
+images/
+__pycache__/
+.vscode/
+video/
+rdp_controller/__pycache__/
+sample_jsons/
+tests/__pycache__/
+README.md
+.git/
+.gitignore

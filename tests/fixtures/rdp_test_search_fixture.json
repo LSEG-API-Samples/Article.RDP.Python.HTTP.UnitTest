@@ -1,0 +1,15 @@
+{
+  "Total": 1,
+  "Hits": [
+    {
+      "IssuerCommonName": "Test Data Name",
+      "DocumentTitle": "Test Data Nam, Ordinary Share, Test-Mock Select Consolidated",
+      "RCSExchangeCountryLeaf": "Country",
+      "IssueISIN": "XX0000XXXXXX",
+      "ExchangeName": "Test-Mock Select Consolidated",
+      "ExchangeCode": "TEST",
+      "SearchAllCategoryv3": "Test data",
+      "RCSTRBC2012Leaf": "This is a test (mock) data, not for production"
+    }
+  ]
+}
