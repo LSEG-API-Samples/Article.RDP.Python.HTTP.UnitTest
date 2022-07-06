@@ -338,9 +338,9 @@ So, how can we unit test HTTP request methods calls without sending any HTTP req
 
 ## Mocking Python HTTP API call with Responses
 
-So, what is a Mock object? A mock is a fake object that you construct to look and act like real data within a testing environment. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. We can simulates various scenario of the real data with mock object, then use a mock library to trick the system into thinking that that mock is the real data.     
+A mock is a fake object that you construct to look and act like real data within a testing environment. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. 
 
-By mocking out external dependencies, developers can run tests as often without being affected by any unexpected changes or irregularities of those dependencies. Mocking also helps developers save time and computing resources if they have to test HTTP requests that fetch a lot of data.
+We can simulates various scenario of the real data with mock object, then use a mock library to trick the system into thinking that that mock is the real data. By mocking out external dependencies, developers can run tests as often without being affected by any unexpected changes or irregularities of those dependencies. Mocking also helps developers save time and computing resources if they have to test HTTP requests that fetch a lot of data.
 
 This example project uses the [Responses](https://github.com/getsentry/responses) library which is specifically for mocking the Requests library.
 
