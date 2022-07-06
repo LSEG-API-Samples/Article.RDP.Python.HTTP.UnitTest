@@ -330,10 +330,19 @@ Ran 2 tests in 0.816s
 FAILED (errors=1)
 ```
 
-However, the test suite above make HTTP requests to RDP APIs in every run. It is not a good idea to flood HTTP request messages to RDP APIs as the test suite always run repeatedly every time developers update their code. It is also not advisable to make test cases that rely on external dependencies, APIs, or components because. 
+However, the test suite above make HTTP requests to RDP APIs in every run. It is not a good idea to flood HTTP requests to RDP APIs repeatedly every time developers run test suite after they updated the code or configurations. 
 
-It is a bad idea to make the test case depends on external services or components .
+Unit test cases should be able to run independently without rely on external services, APIs, or components. Those external dependencies add uncontrolled factors (network, data reliability, behaviors, etc) to the unit test scenarios. Those components-to-components testing should be done in integration testing phase. 
 
+So, how can we unit test HTTP request methods calls without sending any HTTP request messages to an actual server? Fortunately, developers can simulate the HTTP request and response messages with a Mock object.
+
+## Mocking Python HTTP API call with Responses
+
+So, what is a Mock object? A mock is a fake object that you construct to look and act like real data within a testing environment. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. We can simulates various scenario of the real data with mock object, then use a mock library to trick the system into thinking that that mock is the real data.     
+
+By mocking out external dependencies, developers can run tests as often without being affected by any unexpected changes or irregularities of those dependencies. Mocking also helps developers save time and computing resources if they have to test HTTP requests that fetch a lot of data.
+
+This example project uses the [Responses](https://github.com/getsentry/responses) library which is specifically for mocking the Requests library.
 
 ## Project Structure
 
@@ -383,4 +392,6 @@ https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368
 https://docs.python-guide.org/writing/tests/
 
 https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly
+
+https://en.wikipedia.org/wiki/Mock_object
 
