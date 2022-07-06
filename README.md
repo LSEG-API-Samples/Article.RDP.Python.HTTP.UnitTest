@@ -13,25 +13,27 @@ Today, applications are bigger and complex. A few changed on the source code to 
 
 The unit testing is a software testing method that helps developers verify if any changes break the code. Unit testing significantly improves code quality, saves time to find software bugs in early stage of development lifecycle, and improve deployment velocity. Unit testing is currently a main process of a modern Agile software development practice such as CI/CD (Continuous Integration/Continuous Delivery), TDD (Test-driven development), etc.
 
-The modern applications also need to connect to other services like APIs, Database, Data storage, etc. The unit testing needs to cover those module separately too. This example project shows how to run unit test cases for a [Python](https://www.python.org/) application that performs HTTP REST operations. The application uses a de-facto [Requests](https://requests.readthedocs.io/en/latest/) library to connect to the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) as the example HTTP REST APIs.
+The modern applications also need to connect to other services like APIs, Database, Data storage, etc. The unit testing needs to cover those modules too. This example project shows how to run unit test cases for a [Python](https://www.python.org/) application that performs HTTP REST operations which is the most basic task of today application functionality. With unit testing, developers can verify if their code can connect and consume content via HTTP REST API in any code updates. 
+
+The demo application uses a de-facto [Requests](https://requests.readthedocs.io/en/latest/) library to connect to the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) as the example HTTP REST APIs, and uses the Python built-in [unittest](https://docs.python.org/3.9/library/unittest.html) as a test framework.
 
 **Note**:
 This demo project is not cover all test cases for the HTTP operations and all RDP APIs services. It aims to give the readers an idea about how to unit test an application that makes a HTTP connection with Python only. 
 
 ## Unit Testing Overview
 
-Unit testing is a smallest test that focusing on checks that a single part of the application operates correctly. It breaks an application into a smallest, isolated, testable component called units, and then test them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
+Unit testing is a smallest test that focusing on checks that a single part of the application operates correctly. It breaks an application into a smallest, isolated, testable component called *units*, and then test them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
 
 A unit test helps developers to isolate what is broken in their application easier and faster then testing an entire system as a whole. It is the first level of testing done during the development process before integration testing. It is mostly done by the developers  automated or manually to verify their code.
 
 ## Introduction to Python Unittest framework
 
-The [unittest](https://docs.python.org/3.9/library/unittest.html) is Python built unit testing framework. It supports both **test case** (the individual unit of testing) and **test runner** (a special application designed for running test cases and provides the output result). To use unittest, the test case source code requires the following
+The [unittest](https://docs.python.org/3.9/library/unittest.html) is Python built unit testing framework. It supports both **test case** (the individual unit of testing) and **test runner** (a special application designed for running test cases and provides the output result).
 
 The unittest framework has the following requirements:
 1. The test cases must be methods of the class.
 2. That class must be defined as a subclass of ```unittest.TestCase``` class.
-3. Use a series of special assertion methods in the unittest.TestCase class instead of the built-in assert statement.
+3. Use a series of special assertion methods in the ```unittest.TestCase``` class instead of the built-in assert statement.
 4. The methods names must be start with the letter ```test``` as a naming convention for the test runner.
 5. The test cases file name must be start with ```test_``` as a naming convention for the test runner.
 
@@ -60,6 +62,14 @@ To run the test, just run the following command:
 ```
 python -m unittest test_sample
 ```
+Result:
+```
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+```
 Please find more detail about the unittest framework from the following resources:
 - [unittest standard library documentation](https://docs.python.org/3.9/library/unittest.html).
 - [Getting Started With Testing in Python](https://realpython.com/python-testing/).
@@ -79,8 +89,6 @@ This example project is focusing on the Request-Response: RESTful web service de
 For more detail regarding the Refinitiv Data Platform, please see the following APIs resources: 
 - [Quick Start](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/quick-start) page.
 - [Tutorials](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials) page.
-- [RDP APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api) page.
-- [RDP APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens) page.
 
 ### <a id="rdp_workflow"></a>RDP APIs Application Workflow
 
@@ -263,15 +271,33 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-The ```setUpClass()``` is a class method called before tests in an individual class are run. 
+The ```setUpClass()``` is a class method that is called only onces for the whole class before all the tests. The function is useful for set up a *fixture* which can be sample data, preconditions states or context need to run a test. We initialize the RDPHTTPController object (as ```app``` class variable)  and the RDP Base URL string (as ```base_URL``` class variable)  as our fixture here.
 
-setUpClass and tearDownClass are run once for the whole class; 
+Note: The counterpart method of ```setUpClass()``` method is ```tearDownClass()``` which is called after all tests in the class have run.
 
-that setUpClass is called only once and that is before all the tests,
-
+The ```test_login_rdp_success()``` is a test case that for the success RDP Authentication login scenario. It just send the RDP Auth Service URL and RDP credentials to the ```rdp_authentication()``` method and check the response token information. Please noticed that a unit test just focusing on if the rdp_authentication() returns none empty/zero token information only. The token content validation would be in a system test (or later) phase.
 
 ```
-$>python -m unittest test_rdp_http_controller
+self.assertIsNotNone(access_token) # Check if access_token is not None or Empty 
+self.assertIsNotNone(refresh_token) # Check if refresh_token is not None or Empty 
+self.assertGreater(expires_in, 0) # Check if expires_in is greater then 0
+```
+
+The ```test_login_rdp_none_empty_params()``` is a test case that check if the ```rdp_authentication()``` method handles empty or none parameters as expected (throws the TypeError exception and not return token information to a caller).
+
+```
+# Check if TypeError exception is raised
+with self.assertRaises(TypeError) as exception_context:
+    access_token, refresh_token, expires_in = self.app.rdp_authentication(auth_endpoint, username, password, client_id)
+
+self.assertIsNone(access_token) # Check if access_token is None
+...
+self.assertEqual(str(exception_context.exception),'Received invalid (None or Empty) arguments')
+```
+The example of a test runner result is shown below.
+
+```
+$>tests> python -m unittest test_rdp_http_controller
 .Authentication success
 .
 ----------------------------------------------------------------------
@@ -279,6 +305,8 @@ Ran 2 tests in 0.014s
 
 OK
 ```
+
+If you input invalid RDP credentials in a ```.env.test``` file, a  test runner shows the following test failure result (Do not worry, I will cover fail test cases later).
 
 ```
 $>python -m unittest test_rdp_http_controller
@@ -290,9 +318,9 @@ ERROR: test_login_rdp_success (test_rdp_http_controller.TestRDPHTTPController)
 Test that it can logged in to the RDP Auth Service
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\drive_d\Project\Code\rdp_python_unittest\tests\test_rdp_http_controller.py", line 72, in test_login_rdp_success
+  File "....\rdp_python_unittest\tests\test_rdp_http_controller.py", line 72, in test_login_rdp_success
     access_token, refresh_token, expires_in = self.app.rdp_authentication(auth_endpoint, username, password, client_id)
-  File "C:\drive_d\Project\Code\rdp_python_unittest\rdp_controller\rdp_http_controller.py", line 48, in rdp_authentication
+  File "....\rdp_python_unittest\rdp_controller\rdp_http_controller.py", line 48, in rdp_authentication
     raise requests.exceptions.HTTPError(f'RDP authentication failure: {response.status_code} - {response.text} ', response = response )
 requests.exceptions.HTTPError: RDP authentication failure: 401 - {"error":"invalid_client"  ,"error_description":"Invalid Application Credential." }    
 
@@ -301,6 +329,10 @@ Ran 2 tests in 0.816s
 
 FAILED (errors=1)
 ```
+
+However, developers need to run test cases every time they make change to a source code. It is a bad idea to make request to the action service.
+
+## Project Structure
 
 ## Python run app
 
