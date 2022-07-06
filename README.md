@@ -271,7 +271,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-The ```setUpClass()``` is a class method that is called only onces for the whole class before all the tests. The function is useful for set up a *fixture* which can be sample data, preconditions states or context need to run a test. We initialize the RDPHTTPController object (as ```app``` class variable)  and the RDP Base URL string (as ```base_URL``` class variable)  as our fixture here.
+The ```setUpClass()``` is a class method that is called only onces for the whole class before all the tests. The function is useful for set up a *fixture* which can be sample data, preconditions states, context or resources need to run a test. We initialize the RDPHTTPController object (as ```app``` class variable)  and the RDP Base URL string (as ```base_URL``` class variable)  as our fixture here.
 
 Note: The counterpart method of ```setUpClass()``` method is ```tearDownClass()``` which is called after all tests in the class have run.
 
@@ -330,7 +330,10 @@ Ran 2 tests in 0.816s
 FAILED (errors=1)
 ```
 
-However, developers need to run test cases every time they make change to a source code. It is a bad idea to make request to the action service.
+However, the test suite above make HTTP requests to RDP APIs in every run. It is not a good idea to flood HTTP request messages to RDP APIs as the test suite always run repeatedly every time developers update their code. It is also not advisable to make test cases that rely on external dependencies, APIs, or components because. 
+
+It is a bad idea to make the test case depends on external services or components .
+
 
 ## Project Structure
 
@@ -378,3 +381,6 @@ https://web.archive.org/web/20150315073817/http://www.xprogramming.com/testfram.
 https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368
 
 https://docs.python-guide.org/writing/tests/
+
+https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly
+
