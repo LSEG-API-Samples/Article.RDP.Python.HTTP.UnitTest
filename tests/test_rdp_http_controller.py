@@ -14,8 +14,6 @@ import unittest
 import responses
 import requests
 import json
-import string
-import secrets
 import sys
 import os
 from dotenv import dotenv_values
@@ -33,15 +31,9 @@ class TestRDPHTTPController(unittest.TestCase):
         cls.app = rdp_http_controller.RDPHTTPController()
         # Getting the RDP APIs https://api.refinitiv.com base URL. 
         cls.base_URL = config['RDP_BASE_URL']
-        # Creating mock access_token and refresh_token
-        alphabet = string.ascii_letters + string.digits
-        mock_access_token = ''.join(secrets.choice(alphabet) for i in range(250))
-        mock_refresh_token = ''.join(secrets.choice(alphabet) for i in range(36))
-        # Mock RDP Auth valid Response JSON
+        # Loading Mock RDP Auth Token success Response JSON
         with open('./fixtures/rdp_test_auth_fixture.json', 'r') as auth_fixture_input:
             cls.mock_valid_auth_json = json.loads(auth_fixture_input.read())
-            cls.mock_valid_auth_json['access_token'] = f'{mock_access_token}'
-            cls.mock_valid_auth_json['refresh_token'] = f'{mock_refresh_token}'
         
         # Mock RDP Auth Token Expire Response JSON
         with open('./fixtures/rdp_test_token_expire_fixture.json', 'r') as auth_expire_fixture_input:
@@ -93,8 +85,10 @@ class TestRDPHTTPController(unittest.TestCase):
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
 
         #Create new access_token
-        alphabet = string.ascii_letters + string.digits
-        self.mock_valid_auth_json['access_token'] = ''.join(secrets.choice(alphabet) for i in range(250))
+        # alphabet = string.ascii_letters + string.digits
+        # self.mock_valid_auth_json['access_token'] = ''.join(secrets.choice(alphabet) for i in range(250))
+
+        self.mock_valid_auth_json['access_token'] = 'new_access_token_mock1mock2mock3mock4mock5mock6'
 
         mock_rdp_auth = responses.Response(
             method= 'POST',
@@ -136,8 +130,8 @@ class TestRDPHTTPController(unittest.TestCase):
             content_type= 'application/json'
         )
         responses.add(mock_rdp_auth_invalid)
-        username = 'User2'
-        password = 'password1'
+        username = 'wrong_user1'
+        password = 'wrong_password1'
         client_id = 'XXXXX'
         access_token = None
         refresh_token = None
