@@ -49,7 +49,7 @@ class RDPHTTPController():
         
         return access_token, refresh_token, expires_in
     
-    def rdp_getESG(self, esg_url, access_token, universe):
+    def rdp_request_esg(self, esg_url, access_token, universe):
 
         if not esg_url or not access_token or not universe:
             raise TypeError('Received invalid (None or Empty) arguments')
@@ -71,7 +71,7 @@ class RDPHTTPController():
 
         return response.json()
 
-    def rdp_getSearchExplore(self, search_url, access_token, payload):
+    def rdp_request_search_explore(self, search_url, access_token, payload):
 
         if not search_url or not access_token or not payload:
             raise TypeError('Received invalid (None or Empty) arguments')

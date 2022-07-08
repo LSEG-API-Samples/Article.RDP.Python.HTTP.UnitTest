@@ -9,33 +9,33 @@ ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR 
 
 ## <a id="intro"></a>Introduction
 
-Today, applications are bigger and complex. A few changed on the source code to add more features or fix bugs can make unexpected behavior to an application. Developers cannot just wait for the test result from the QA team anymore. They needs to do a unit testing regularly as integral part of the development process. 
+Today, applications are bigger and more complex. A few changes to the source code to add more features or fix bugs can make unexpected behavior in an application. Developers cannot just wait for the test result from the QA team anymore. They need to do unit testing regularly as an integral part of the development process. 
 
-The unit testing is a software testing method that helps developers verify if any changes break the code. Unit testing significantly improves code quality, saves time to find software bugs in early stage of development lifecycle, and improve deployment velocity. Unit testing is currently a main process of a modern Agile software development practice such as CI/CD (Continuous Integration/Continuous Delivery), TDD (Test-driven development), etc.
+Unit testing is a software testing method that helps developers verify if any changes break the code. Unit testing significantly improves code quality, saves time to find software bugs in an early stage of the development lifecycle, and improves deployment velocity. Unit testing is currently the main process of a modern Agile software development practice such as CI/CD (Continuous Integration/Continuous Delivery), TDD (Test-driven development), etc.
 
-The modern applications also need to connect to other services like APIs, Database, Data storage, etc. The unit testing needs to cover those modules too. This example project shows how to run unit test cases for a [Python](https://www.python.org/) application that performs HTTP REST operations which is the most basic task of today application functionality. With unit testing, developers can verify if their code can connect and consume content via HTTP REST API in any code updates. 
+Modern applications also need to connect to other services like APIs, databases, data storage, etc. The unit testing needs to cover those modules too. This example project shows how to run unit test cases for a [Python](https://www.python.org/) application that performs HTTP REST operations which is the most basic task of today's application functionality. With unit testing, developers can verify if their code can connect and consume content via HTTP REST API in any code updates. 
 
-The demo application uses a de-facto [Requests](https://requests.readthedocs.io/en/latest/) library to connect to the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) as the example HTTP REST APIs, and uses the Python built-in [unittest](https://docs.python.org/3.9/library/unittest.html) as a test framework.
+The demo application uses a de-facto [Requests](https://requests.readthedocs.io/en/latest/) library to connect to the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) as the example HTTP REST APIs and uses the Python built-in [unittest](https://docs.python.org/3.9/library/unittest.html) as a test framework.
 
 **Note**:
-This demo project is not cover all test cases for the HTTP operations and all RDP APIs services. It aims to give the readers an idea about how to unit test an application that makes a HTTP connection with Python only. 
+This demo project is not cover all test cases for the HTTP operations and all RDP APIs services. It aims to give the readers an idea about how to unit test an application that makes an HTTP connection with Python only. 
 
 ## Unit Testing Overview
 
-Unit testing is a smallest test that focusing on checks that a single part of the application operates correctly. It breaks an application into a smallest, isolated, testable component called *units*, and then test them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
+Unit testing is the smallest test that focuses on checking that a single part of the application operates correctly. It breaks an application into the smallest, isolated, testable component called *units*, and then tests them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
 
-A unit test helps developers to isolate what is broken in their application easier and faster then testing an entire system as a whole. It is the first level of testing done during the development process before integration testing. It is mostly done by the developers  automated or manually to verify their code.
+A unit test helps developers to isolate what is broken in their application easier and faster than testing an entire system as a whole. It is the first level of testing done during the development process before integration testing. It is mostly done by the developers automated or manually to verify their code.
 
 ## Introduction to Python Unittest framework
 
-The [unittest](https://docs.python.org/3.9/library/unittest.html) is Python built unit testing framework. It supports both **test case** (the individual unit of testing) and **test runner** (a special application designed for running test cases and provides the output result).
+The [unittest](https://docs.python.org/3.9/library/unittest.html) is a Python-built unit testing framework. It supports both **test case** (the individual unit of testing) and **test runner** (a special application designed for running test cases and provides the output result).
 
 The unittest framework has the following requirements:
 1. The test cases must be methods of the class.
 2. That class must be defined as a subclass of ```unittest.TestCase``` class.
 3. Use a series of special assertion methods in the ```unittest.TestCase``` class instead of the built-in assert statement.
-4. The methods names must be start with the letter ```test``` as a naming convention for the test runner.
-5. The test cases file name must be start with ```test_``` as a naming convention for the test runner.
+4. The methods' names must start with the letter ```test``` as a naming convention for the test runner.
+5. The test cases file name must start with ```test_``` as a naming convention for the test runner.
 
 Example from [unittest official page](https://docs.python.org/3.9/library/unittest.html):
 ```
@@ -124,19 +124,28 @@ This example project is a Python console application that login to RDP, then req
 ├── requirements.txt
 └── tests
     ├── __init__.py
+    ├── fixtures
+    │   ├── rdp_test_auth_fixture.json
+    │   ├── rdp_test_esg_fixture.json
+    │   ├── rdp_test_esg_fixture_tmp.json
+    │   ├── rdp_test_search_fixture.json
+    │   └── rdp_test_token_expire_fixture.json
     ├── test_app.py
     └── test_rdp_http_controller.py
 ```
 * app.py: The main console application.
 * rdp_controller/rdp_http_controller.py: The main HTTP operations class. This is our focusing class for unit testing.
-* tests/test_rdp_http_controller.py: The main test cases class that test all rdp_http_controller.py class's methods. This is our focusing test cases in this project.
-* tests/test_app.py: The main test cases class that test some app.py methods.
+* tests/test_rdp_http_controller.py: The main test cases class that tests all rdp_http_controller.py class's methods. This is our focus test suite in this project.
+* tests/test_app.py: The test suite class that tests some app.py methods.
+* tests/fixtures: The test suite fixture/resource files.
 
 ### Unit Testing RDP APIs Authentication
 
 The ```rdp_controller/rdp_http_controller.py``` class uses the Requests library to send and receive data with the RDP HTTP REST APIs. The code for the RDP authentication is shown below.
 
 ```
+# rdp_controller/rdp_http_controller.py
+
 import requests
 import json
 
@@ -189,19 +198,17 @@ class RDPHTTPController():
         return access_token, refresh_token, expires_in
 ```
 
-The ```rdp_authentication``` method above just perform the following tasks:
-
-The ```rdp_authentication()``` method above just create the request message payload, and send it to the RDP Auth service as HTTP Post request. The return values can be as follows
+The ```rdp_authentication()``` method above just create the request message payload, and send it to the RDP Auth service as an HTTP Post request. The return values can be as follows
 - If the authentication success, returns the access_token, refresh_token, and expires_in information to the caller.
-- If the URL or credentials parameters are empty or none, raises TypeError exception to the caller.
-- If the authentication fail, raises the Requests's HTTPError exception to the caller with HTTP status response information.
+- If the URL or credentials parameters are empty or none, raise the TypeError exception to the caller.
+- If the authentication fails, raise the Requests' HTTPError exception to the caller with HTTP status response information.
 
 Let's start with the basic test cases to check if the ```rdp_authentication()``` method can handle a valid RDP login and empty parameters scenarios. 
 
 The test class is ```tests\test_rdp_http_controller.py``` file (please noticed a *tests* folder). It loads the test configurations such as the RDP APIs URLs from a ```.env.test``` environment variables file.
 
 ```
-#test_rdp_http_controller.py
+# test_rdp_http_controller.py
 
 import unittest
 import json
@@ -271,11 +278,11 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-The ```setUpClass()``` is a class method that is called only onces for the whole class before all the tests. The function is useful for set up a *fixture* which can be sample data, preconditions states, context or resources need to run a test. We initialize the RDPHTTPController object (as ```app``` class variable)  and the RDP Base URL string (as ```base_URL``` class variable)  as our fixture here.
+The ```setUpClass()``` is a class method that is called only once for the whole class before all the tests. The function is useful for setting up a *fixture* which can be sample data, preconditions states, context, or resources needed to run a test. We initialize the RDPHTTPController object (as ```app``` class variable)  and the RDP Base URL string (as ```base_URL``` class variable)  as our fixture here.
 
 Note: The counterpart method of ```setUpClass()``` method is ```tearDownClass()``` which is called after all tests in the class have run.
 
-The ```test_login_rdp_success()``` is a test case for the success RDP Authentication login scenario. It just send the RDP Auth Service URL and RDP credentials to the ```rdp_authentication()``` method and check the response token information. Please noticed that a unit test just focusing on if the rdp_authentication() returns none empty/zero token information only. The token content validation would be in a system test (or later) phase.
+The ```test_login_rdp_success()``` is a test case for the success RDP Authentication login scenario. It just sends the RDP Auth Service URL and RDP credentials to the ```rdp_authentication()``` method and checks the response token information. Please noticed that a unit test just focuses on if the rdp_authentication() returns no empty/zero token information only. The token content validation would be in a system test (or later) phase.
 
 ```
 self.assertIsNotNone(access_token) # Check if access_token is not None or Empty 
@@ -332,21 +339,21 @@ Ran 2 tests in 0.816s
 FAILED (errors=1)
 ```
 
-However, the test suite above make HTTP requests to RDP APIs in every run. It is not a good idea to flood requests to external services every time developers run test suite when they have updated the code or configurations. 
+However, the test suite above makes HTTP requests to RDP APIs in every run. It is not a good idea to flood requests to external services every time developers run a test suite when they have updated the code or configurations. 
 
-Unit test cases should be able to run independently without rely on external services or APIs. The external dependencies add uncontrolled factors (such as network connection, data reliability, etc) to unit test cases. Those components-to-components testing should be done in an integration testing phase. 
+Unit test cases should be able to run independently without relying on external services or APIs. The external dependencies add uncontrolled factors (such as network connection, data reliability, etc) to unit test cases. Those components-to-components testing should be done in an integration testing phase. 
 
-So, how can we unit test HTTP request methods calls without sending any HTTP request messages to an actual server? Fortunately, developers can simulate the HTTP request and response messages with a Mock object.
+So, how can we unit test HTTP request method calls without sending any HTTP request messages to an actual server? Fortunately, developers can simulate the HTTP request and response messages with a Mock object.
 
 ## Mocking Python HTTP API call with Responses
 
-A mock is a fake object that is constructed to look and act like real data within a testing environment. We can simulates various scenario of the real data with mock object, then use a mock library to trick the system into thinking that that mock is the real one. 
+A mock is a fake object that is constructed to look and act like real data within a testing environment. We can simulate the various scenario of the real data with a mock object, then use a mock library to trick the system into thinking that that mock is the real one. 
 
 The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. By mocking out external dependencies, developers can run tests as often without being affected by any unexpected changes or irregularities of those dependencies. Mocking also helps developers save time and computing resources if they have to test HTTP requests that fetch a lot of data.
 
 This example project uses the [Responses](https://github.com/getsentry/responses) library for mocking the Requests library. 
 
-So, I will start off with a mock object for testing a success RDP login case. Firstly, create a *rdp_test_auth_fixture.json* fixture file with a dummy content of the RDP authentication success response message in a *tests/fixtures* folder. 
+So, I will start with a mock object for testing a successful RDP login case. Firstly, create a *rdp_test_auth_fixture.json* fixture file with a dummy content of the RDP authentication success response message in a *tests/fixtures* folder. 
 
 ```
 {
@@ -361,7 +368,7 @@ So, I will start off with a mock object for testing a success RDP login case. Fi
 Next, load this *rdp_test_auth_fixture.json* file in the ```setUpClass()``` method to a ```mock_valid_auth_json``` class variable. The other test cases can use this mock json object for the dummy access token information.
 
 ```
-#test_rdp_http_controller.py
+# test_rdp_http_controller.py
 
 import unittest
 import requests
@@ -389,12 +396,12 @@ class TestRDPHTTPController(unittest.TestCase):
         
 ```
 
-The Responses library lets developers register mock responses to the Requests library and cover test method with ```responses.activate``` decorator. Developers can specify the endpoint URL, HTTP method, status response, response message, etc of that request via a ```responses.add()``` method. 
+The Responses library lets developers register mock responses to the Requests library and cover the test method with ```responses.activate``` decorator. Developers can specify the endpoint URL, HTTP method, status response, response message, etc of that request via a ```responses.add()``` method. 
 
 Example Code:
 
 ```
-#test_rdp_http_controller.py
+# test_rdp_http_controller.py
 
 import unittest
 import responses
@@ -447,24 +454,16 @@ The code above set a Responses mock object with the *https://api.refinitiv.com/a
 
 ### Testing Invalid RDP Authentication Request-Response
 
-This mock object also useful for testing the false cases such as invalid login too. 
+This mock object is also useful for testing false cases such as invalid login too.  The ```test_login_rdp_invalid()``` method is a test case for the RDP Authentication login failure scenario. We set a Responses mock object for the *https://api.refinitiv.com/auth/oauth2/v1/token* URL and HTTP *POST* method with the expected error response message and status (401 - Unauthorized). 
 
 ```
-#test_rdp_http_controller.py
+# test_rdp_http_controller.py
 
 ...
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
-    @classmethod
-    def setUpClass(cls):
-        ...
-
-    @responses.activate
-    def test_login_rdp_success(self):
-        ...
-        
+    ...        
     
     @responses.activate
     def test_login_rdp_invalid(self):
@@ -490,26 +489,42 @@ class TestRDPHTTPController(unittest.TestCase):
         access_token = None
         refresh_token = None
         expires_in = 0
+        ...
+```
+
+Once the ```rdp_authentication()``` method is called, the test case verifies if the method raises the ```requests.exceptions.HTTPError``` exception with the expected error message and status. The test case also makes assertions to check if the method does not return token information to a caller.
+
+```
+# test_rdp_http_controller.py
+
+...
+
+class TestRDPHTTPController(unittest.TestCase):
+
+    ...    
+    
+    @responses.activate
+    def test_login_rdp_invalid(self):
+        """
+        Test that it handle some invalid credentials
+        """
+        ...
         with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
             access_token, refresh_token, expires_in = self.app.rdp_authentication(auth_endpoint, username, password, client_id)
 
-        self.assertIsNone(access_token)
-        self.assertIsNone(refresh_token)
-        self.assertEqual(expires_in, 0)
-        self.assertEqual(exception_context.exception.response.status_code, 401)
-        self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
+            self.assertIsNone(access_token)
+            self.assertIsNone(refresh_token)
+            self.assertEqual(expires_in, 0)
+            self.assertEqual(exception_context.exception.response.status_code, 401)
+            self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
 
-        json_error = json.loads(exception_context.exception.response.text)
-        self.assertIn('error', json_error)
-        self.assertIn('error_description', json_error)
-
+            json_error = json.loads(exception_context.exception.response.text)
+            self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
+            self.assertIn('error', json_error)
+            self.assertIn('error_description', json_error)
 ```
 
-The ```test_login_rdp_invalid()``` method is a test case for the failure RDP Authentication login scenario. We set a Responses mock object for the *https://api.refinitiv.com/auth/oauth2/v1/token* URL and HTTP *POST* method with the expected error response message and status (401 - Unauthorized). 
-
-Once the ```rdp_authentication()``` method is called, the test case verify if the method raises the ```requests.exceptions.HTTPError``` exception with the expected error message and status. The test case also make assertions to check if the method not return token information to a caller.
-
-With mocking, a test case never need to send actual request messages to the RDP APIs, so we can test more scenarios for other RDP services too.
+With mocking, a test case never needs to send actual request messages to the RDP APIs, so we can test more scenarios for other RDP services too.
 
 ## <a id="rdp_get_data"></a>Unit Testing for RDP APIs Data Request
 
@@ -521,19 +536,56 @@ Please notice *the space* between the ```Bearer``` and ```RDP Access Token``` va
 
 The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's [API Playground page](https://api.refinitiv.com/) - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.
 
-The example console application consume content from the following the RDP Services:
+The example console application consumes content from the following RDP Services:
 - ESG Service ```/data/environmental-social-governance/<version>/views/scores-full``` endpoint that provides full coverage of Refinitiv's proprietary ESG Scores with full history for consumers.
 - Discovery Search Explore Service ```/discover/search/<version>/explore``` endpoint that explore Refinitiv data based on searching options.
 
 However, this development article covers the ESG Service test cases only. The Discovery Search Explore Service's test cases have the same test logic as the ESG's test cases.
 
-## Testing ESG Data 
+## Unit Testing HTTP Request Source Code for The RDP ESG Service
 
-Now let me turn to testing the Environmental Social and Governance (ESG) service endpoint. 
+Now let me turn to test the Environmental Social and Governance (ESG) service endpoint. The code in the ```rdp_controller/rdp_http_controller.py``` class for requesting the ESG data is shown below.
+
+```
+# rdp_controller/rdp_http_controller.py
+
+import requests
+import json
+
+class RDPHTTPController():
+
+    ...
+    
+    def rdp_request_esg(self, esg_url, access_token, universe):
+
+        if not esg_url or not access_token or not universe:
+            raise TypeError('Received invalid (None or Empty) arguments')
+
+        payload = {'universe': universe}
+        # Request data for ESG Score Full Service
+        try:
+            response = requests.get(esg_url, headers={'Authorization': f'Bearer {access_token}'}, params = payload)
+        except Exception as exp:
+            print(f'Caught exception: {exp}')
+
+        if response.status_code == 200:  # HTTP Status 'OK'
+            print('Receive ESG Data from RDP APIs')
+        else:
+            print(f'RDP APIs: ESG data request failure: {response.status_code} {response.reason}')
+            print(f'Text: {response.text}')
+            raise requests.exceptions.HTTPError(f'ESG data request failure: {response.status_code} - {response.text} ', response = response )
+
+        return response.json()
+```
+
+The ```rdp_request_esg()``` method above just create the request message payload, and send it to the RDP ESG service as HTTP GET request with the Requests ```requests.get()``` method. The return values can be as follows
+- If the request success (HTTP status is 200), returns the response data in JSON message format.
+- If the URL or credentials parameters are empty or none, raise the TypeError exception to the caller.
+- If the request fails, raise the Requests' HTTPError exception to the caller with HTTP status response information.
 
 ### Testing a valid RDP ESG Request-Response
 
-I will begin by creating a fixture file with a valid ESG dummy response message. A file is *rdp_test_esg_fixture.json* in a *tests/fixtures* folder.
+The first test case is the request success scenario. I will begin by creating a fixture file with a valid ESG dummy response message. A file is *rdp_test_esg_fixture.json* in a *tests/fixtures* folder.
 
 ```
 {
@@ -573,19 +625,15 @@ I will begin by creating a fixture file with a valid ESG dummy response message.
   ]
 }
 ```
-Next, create the ```test_request_esg()``` method in test_rdp_http_controller.py file to test the valid ESG data request-response test case. 
+
+Next, create the ```test_request_esg()``` method in the test_rdp_http_controller.py file to test the easiest test case, the successful ESG data request-response scenario.  This method creates a mock object for the RDP ```https://api.refinitiv.com/data/environmental-social-governance/v2/views/scores-full``` endpoint URL with the HTTP *GET* method. 
 
 ```
-#test_rdp_http_controller.py
+# test_rdp_http_controller.py
 ...
 
 class TestRDPHTTPController(unittest.TestCase):
-
-    # A class method called before tests in an individual class are run
-    @classmethod
-    def setUpClass(cls):
-       ...
-        
+     
     ...
 
     @responses.activate
@@ -610,14 +658,200 @@ class TestRDPHTTPController(unittest.TestCase):
 
         esg_endpoint = self.base_URL + config['RDP_ESG_URL']
         universe = 'TEST.RIC'
+        ...
+
+```
+When the Requests library receives the HTTP GET request for that URL, it returns a mock ESG data JSON object with HTTP Status *200* and Content-Type *application/json* to the application. The ```test_request_esg()``` method then verifies if the response data is in JSON/[Dictionaries](https://docs.python.org/3.9/tutorial/datastructures.html#dictionaries) type, and checks if the message contains the basic ESG fields. 
+
+```
+# test_rdp_http_controller.py
+
+class TestRDPHTTPController(unittest.TestCase):
+  
+    ...
+
+    @responses.activate
+    def test_request_esg(self):
+        """
+        Test that it can request ESG Data
+        """
+        ...
         response = self.app.rdp_getESG(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
 
         # verifying basic response
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
         self.assertIn('data', response) #Check if return JSON has 'data' fields
         self.assertIn('headers', response) #Check if return JSON has 'headers' fields
         self.assertIn('universe', response) #Check if return JSON has 'universe' fields
+```
+
+### Testing Requesting RDP ESG data with an expired token
+
+That brings us to one of the most common RDP APIs failure scenarios, applications request data from RDP with an expired access token. 
+The ```test_request_esg_token_expire()``` method is the one for testing this case with the RDP ESG Service. 
+
+The first step is to create a JSON file ```tests/rdp_test_token_expire_fixture.json``` as a test fixture with the following content.
 
 ```
+{
+    "error": {
+        "id": "XXXXXXXXXX",
+        "code": "401",
+        "message": "token expired",
+        "status": "Unauthorized"
+    }
+}
+```
+
+All RDP data services use the same token expire error message, so we load this fixture file as a class variable named ```mock_token_expire_json``` to use in all test case methods. 
+
+```
+# test_rdp_http_controller.py
+
+class TestRDPHTTPController(unittest.TestCase):
+
+    # A class method called before tests in an individual class are run
+    @classmethod
+    def setUpClass(cls):
+        # Set up previous class variables
+        ...
+        
+        # Mock RDP Auth Token Expire Response JSON
+        with open('./fixtures/rdp_test_token_expire_fixture.json', 'r') as auth_expire_fixture_input:
+            cls.mock_token_expire_json = json.loads(auth_expire_fixture_input.read())
+
+```
+
+The token expires error message is sent from the RDP services to applications with HTTP error status (401 - **As of July 2022**), the ```test_request_esg_token_expire()``` method simulates the token expire error message and HTTP 401 status with a mock object as follows.
+
+```
+# test_rdp_http_controller.py
+
+class TestRDPHTTPController(unittest.TestCase):
+
+    # Previous test cases
+    ...
+
+    @responses.activate
+    def test_request_esg_token_expire(self):
+        """
+        Test that it can handle token expire requests
+        """
+        esg_endpoint = self.base_URL + config['RDP_ESG_URL']
+        universe = 'TEST.RIC'
+        mock_rdp_esg_viewscore = responses.Response(
+            method= 'GET',
+            url = esg_endpoint,
+            json = self.mock_token_expire_json,
+            status= 401,
+            content_type= 'application/json'
+        )
+        responses.add(mock_rdp_esg_viewscore)
+
+```
+
+Next, this test case verifies if the ```rdp_request_esg()``` method raises the ```requests.exceptions.HTTPError``` exception with the expected error message and status.
+
+```
+# test_rdp_http_controller.py
+
+class TestRDPHTTPController(unittest.TestCase):
+
+    # Previous test cases
+    ...
+
+    @responses.activate
+    def test_request_esg_token_expire(self):
+        """
+        Test that it can handle token expire requests
+        """
+        # Previous code
+        ...
+        responses.add(mock_rdp_esg_viewscore)
+
+        with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
+            response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+        
+        self.assertEqual(exception_context.exception.response.status_code, 401)
+        self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
+
+        json_error = json.loads(exception_context.exception.response.text)
+        self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
+        self.assertIn('error', json_error)
+        self.assertIn('message',json_error['error'])
+        self.assertIn('status', json_error['error'])
+  
+```
+### Testing Requesting RDP ESG data with an invalid item
+
+Now we come to other common test cases, what if users request invalid item name data from the RDP ESG service? We can use a mock object to simulate invalid item request-response messages too.
+
+When the ESG Service receives a request message with an invalid item name, it returns the following error response message to the applications as HTTP Status *200* (**As of July 2022**):
+
+```
+{
+    'error': {
+        'code': 412,
+        'description': 'Unable to resolve all requested identifiers.'
+    }
+}
+```
+
+The ```test_request_esg_invalid_ric()``` method set a mock invalid item request-response messages to the Requests library, and check if the ```rdp_request_esg()``` method returns the error message with HTTP status *200* as expected. 
+
+```
+# test_rdp_http_controller.py
+
+class TestRDPHTTPController(unittest.TestCase):
+
+    # Previous Code
+    ...
+  
+    @responses.activate
+    def test_request_esg_invalid_ric(self):
+        """
+        Test that it can handle invalid RIC request
+        """
+        esg_endpoint = self.base_URL + config['RDP_ESG_URL']
+        mock_rdp_esg_viewscore = responses.Response(
+            method= 'GET',
+            url = esg_endpoint,
+            json = {
+                'error': {
+                    'code': 412,
+                    'description': 'Unable to resolve all requested identifiers.'
+                }
+            },
+            status= 200,
+            content_type= 'application/json'
+        )
+        responses.add(mock_rdp_esg_viewscore)
+
+        universe = 'INVALID.RIC'
+
+        response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
+        self.assertIn('error', response)
+        self.assertIn('code', response['error'])
+        self.assertIn('description', response['error'])
+        
+```
+
+That covers all I wanted to say about unit testing the HTTP requests for the RDP ESG service.
+
+## Unit Testing HTTP Request Source Code for the RDP Search Explore Service
+
+The source code that uses the Request library ```requests.post()``` method to send HTTP POST request message to the RDP Search Explore is available at the ```rdp_request_search_explore()``` method of the ```rdp_controller/rdp_http_controller.py``` class. 
+
+The test cases for this ```rdp_request_search_explore()``` method have the same testing and mocking logic as all previous cases that I have mentions above. You can find more details in the following test cases methods:
+- ```test_request_search_explore()```` method: Unit testing a valid request-response
+- ```test_request_search_explore_token_expire()``` method: Unit testing a token expired case
+- ```test_request_search_explore_invalid_ric()``` method: Unit testing an invalid ric case
+- ```test_request_search_explore_invalid_json()``` method: Unit testing an invalid JSON post message case
+- ```test_request_search_explore_none_empty()```method: Unit testing an empty (or None) input parameters case
+
+That’s all I have to say about unit testing the Python HTTP code with Requests and Responses libraries.
 
 ## Project Structure
 

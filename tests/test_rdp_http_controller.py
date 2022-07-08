@@ -146,6 +146,7 @@ class TestRDPHTTPController(unittest.TestCase):
         self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
 
         json_error = json.loads(exception_context.exception.response.text)
+        self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
         self.assertIn('error', json_error)
         self.assertIn('error_description', json_error)
     
@@ -196,9 +197,10 @@ class TestRDPHTTPController(unittest.TestCase):
 
         esg_endpoint = self.base_URL + config['RDP_ESG_URL']
         universe = 'TEST.RIC'
-        response = self.app.rdp_getESG(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+        response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
 
         # verifying basic response
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
         self.assertIn('data', response) #Check if return JSON has 'data' fields
         self.assertIn('headers', response) #Check if return JSON has 'headers' fields
         self.assertIn('universe', response) #Check if return JSON has 'universe' fields
@@ -220,12 +222,13 @@ class TestRDPHTTPController(unittest.TestCase):
         responses.add(mock_rdp_esg_viewscore)
 
         with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
-            response = self.app.rdp_getESG(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+            response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
         
         self.assertEqual(exception_context.exception.response.status_code, 401)
         self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
 
         json_error = json.loads(exception_context.exception.response.text)
+        self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
         self.assertIn('error', json_error)
         self.assertIn('message',json_error['error'])
         self.assertIn('status', json_error['error'])
@@ -252,7 +255,9 @@ class TestRDPHTTPController(unittest.TestCase):
 
         universe = 'INVALID.RIC'
 
-        response = self.app.rdp_getESG(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+        response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
         self.assertIn('error', response)
         self.assertIn('code', response['error'])
         self.assertIn('description', response['error'])
@@ -265,7 +270,7 @@ class TestRDPHTTPController(unittest.TestCase):
 
         universe = '' 
         with self.assertRaises(TypeError) as exception_context:
-            response = self.app.rdp_getESG(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
+            response = self.app.rdp_request_esg(esg_endpoint, self.mock_valid_auth_json['access_token'], universe)
 
         self.assertEqual(str(exception_context.exception),'Received invalid (None or Empty) arguments')
         
@@ -294,8 +299,9 @@ class TestRDPHTTPController(unittest.TestCase):
         )
         responses.add(mock_rdp_search_explorer)
 
-        response = self.app.rdp_getSearchExplore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
+        response = self.app.rdp_request_search_explore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
 
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
         self.assertIn('Total', response) # Check if response data has 'Total' field
         self.assertIn('Hits', response)  # Check if response data has 'Hits' field
 
@@ -321,12 +327,13 @@ class TestRDPHTTPController(unittest.TestCase):
         responses.add(mock_rdp_search_explorer)
 
         with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
-            response = self.app.rdp_getSearchExplore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
+            response = self.app.rdp_request_search_explore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
         
         self.assertEqual(exception_context.exception.response.status_code, 401)
         self.assertEqual(exception_context.exception.response.reason, 'Unauthorized')
 
         json_error = json.loads(exception_context.exception.response.text)
+        self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
         self.assertIn('error', json_error)
         self.assertIn('message',json_error['error'])
         self.assertIn('status', json_error['error'])
@@ -356,8 +363,9 @@ class TestRDPHTTPController(unittest.TestCase):
         )
         responses.add(mock_rdp_search_explorer)
 
-        response = self.app.rdp_getSearchExplore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
+        response = self.app.rdp_request_search_explore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
         
+        self.assertIsInstance(response, dict) #Check if return data is  JSON (dict)
         self.assertIn('Hits', response)
         self.assertIn('Total', response)
         self.assertEqual(response['Total'], 0)
@@ -394,12 +402,13 @@ class TestRDPHTTPController(unittest.TestCase):
         responses.add(mock_rdp_search_explorer)
 
         with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
-            response = self.app.rdp_getSearchExplore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
+            response = self.app.rdp_request_search_explore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
         
         self.assertEqual(exception_context.exception.response.status_code, 400)
         self.assertEqual(exception_context.exception.response.reason, 'Bad Request')
 
         json_error = json.loads(exception_context.exception.response.text)
+        self.assertIsInstance(json_error, dict) #Check if return data is  JSON (dict)
         self.assertIn('error', json_error)
         self.assertIn('errors',json_error['error'])
         self.assertGreater(len(json_error['error']['errors']), 0)
@@ -414,7 +423,7 @@ class TestRDPHTTPController(unittest.TestCase):
 
         payload = {}
         with self.assertRaises(TypeError) as exception_context:
-            response = self.app.rdp_getSearchExplore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
+            response = self.app.rdp_request_search_explore(search_endpoint, self.mock_valid_auth_json['access_token'], payload)
 
         self.assertEqual(str(exception_context.exception),'Received invalid (None or Empty) arguments')
         
