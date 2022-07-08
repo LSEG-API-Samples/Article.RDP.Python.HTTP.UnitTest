@@ -580,8 +580,9 @@ class RDPHTTPController():
 
 The ```rdp_request_esg()``` method above just create the request message payload, and send it to the RDP ESG service as HTTP GET request with the Requests ```requests.get()``` method. The return values can be as follows
 - If the request success (HTTP status is 200), returns the response data in JSON message format.
-- If the URL or credentials parameters are empty or none, raise the TypeError exception to the caller.
+- If the URL or access token, or universe values are empty or none, raise the TypeError exception to the caller.
 - If the request fails, raise the Requests' HTTPError exception to the caller with HTTP status response information.
+
 
 ### Testing a valid RDP ESG Request-Response
 
@@ -782,6 +783,9 @@ class TestRDPHTTPController(unittest.TestCase):
         self.assertIn('status', json_error['error'])
   
 ```
+The other common RDP APIs failure scenarios is the application sends the request message to RDP without the access token in the HTTP request' header. However, the *access token* is one of the ```rdp_request_esg()``` method required parameters. If the access token is not presented (None or Empty), the method raise the TypeError exception and not send HTTP request message to the RDP. The ```test_request_esg_none_empty()``` method is the one that covers this test case.
+
+
 ### Testing Requesting RDP ESG data with an invalid item
 
 Now we come to other common test cases, what if users request invalid item name data from the RDP ESG service? We can use a mock object to simulate invalid item request-response messages too.
@@ -845,7 +849,7 @@ That covers all I wanted to say about unit testing the HTTP requests for the RDP
 The source code that uses the Request library ```requests.post()``` method to send HTTP POST request message to the RDP Search Explore is available at the ```rdp_request_search_explore()``` method of the ```rdp_controller/rdp_http_controller.py``` class. 
 
 The test cases for this ```rdp_request_search_explore()``` method have the same testing and mocking logic as all previous cases that I have mentions above. You can find more details in the following test cases methods:
-- ```test_request_search_explore()```` method: Unit testing a valid request-response
+- ```test_request_search_explore()``` method: Unit testing a valid request-response
 - ```test_request_search_explore_token_expire()``` method: Unit testing a token expired case
 - ```test_request_search_explore_invalid_ric()``` method: Unit testing an invalid ric case
 - ```test_request_search_explore_invalid_json()``` method: Unit testing an invalid JSON post message case
