@@ -22,9 +22,13 @@ This demo project is not cover all test cases for the HTTP operations and all RD
 
 ## Unit Testing Overview
 
-Unit testing is the smallest test that focuses on checking that a single part of the application operates correctly. It breaks an application into the smallest, isolated, testable component called *units*, and then tests them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
+[Unit testing](https://en.wikipedia.org/wiki/Unit_testing) is the smallest test that focuses on checking that a single part of the application operates correctly. It breaks an application into the smallest, isolated, testable component called *units*, and then tests them individually. The unit is mostly a function or method call or procedure in the application source code. Developers and QA can test each unit by sending any data into that unit and see if it functions as intended. 
 
 A unit test helps developers to isolate what is broken in their application easier and faster than testing an entire system as a whole. It is the first level of testing done during the development process before integration testing. It is mostly done by the developers automated or manually to verify their code.
+
+You can find more detail about the unit test concept from the following resources:
+- [Python Guide: Testing Your Code](https://docs.python-guide.org/writing/tests/) article.
+- [How and when to use Unit Testing properly](https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly) post.
 
 ## Introduction to Python Unittest framework
 
@@ -157,11 +161,8 @@ class RDPHTTPController():
         self.client_secret = ''
         pass
     
-    # Send HTTP Post request to get Access Token (Password Grant and Refresh Grant) from RDP Auth Service
+    # Send HTTP Post request to get Access Token (Password Grant and Refresh Grant) from the RDP Auth Service
     def rdp_authentication(self, auth_url, username, password, client_id, old_refresh_token = None):
-        """
-        Send Authentication to RDP Auth service
-        """
 
         if not auth_url or not username or not password or not client_id:
             raise TypeError('Received invalid (None or Empty) arguments')
@@ -232,7 +233,7 @@ class TestRDPHTTPController(unittest.TestCase):
     
     def test_login_rdp_success(self):
         """
-        Test that it can logged in to the RDP Auth Service (using Mock)
+        Test that it can log in to the RDP Auth Service
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
         
@@ -423,7 +424,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_login_rdp_success(self):
         """
-        Test that it can logged in to the RDP Auth Service (using Mock)
+        Test that it can log in to the RDP Auth Service
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
         
@@ -468,7 +469,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_login_rdp_invalid(self):
         """
-        Test that it handle some invalid credentials
+        Test that it can handle some invalid credentials
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
 
@@ -555,7 +556,7 @@ import json
 class RDPHTTPController():
 
     ...
-    
+    # Send HTTP Get request to the RDP ESG Service
     def rdp_request_esg(self, esg_url, access_token, universe):
 
         if not esg_url or not access_token or not universe:
@@ -736,7 +737,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_request_esg_token_expire(self):
         """
-        Test that it can handle token expire requests
+        Test that it can handle token expiration requests
         """
         esg_endpoint = self.base_URL + config['RDP_ESG_URL']
         universe = 'TEST.RIC'
@@ -857,54 +858,80 @@ The test cases for this ```rdp_request_search_explore()``` method have the same 
 
 That’s all I have to say about unit testing the Python HTTP code with Requests and Responses libraries.
 
-## Project Structure
+## <a id="prerequisite"></a>Prerequisite
 
-## Python run app
+This demo project requires the following dependencies.
+
+1. RDP Access credentials.
+2. Python [Anaconda](https://www.anaconda.com/distribution/) or [MiniConda](https://docs.conda.io/en/latest/miniconda.html) distribution/package manager.
+3. [Docker Desktop/Engine](https://docs.docker.com/get-docker/) application for running the test suite with Docker.
+5. Internet connection.
+
+Please contact your Refinitiv representative to help you to access the RDP account and services. You can find more detail regarding the RDP access credentials set up from the lease see the *Getting Started for User ID* section of the [Getting Start with Refinitiv Data Platform](https://developers.refinitiv.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
 
 
-## Python Test
+## <a id="how_to_run"></a>How to run the example test suite
 
-```
-python -m unittest test_http
+The first step is to unzip or download the example project folder into a directory of your choice, then set up Python or Docker environments based on your preference.
 
-python -m unittest test_rdp_http_controller
+### <a id="python_example_run"></a>Run example test suite in a console
 
-python -m unittest discover 
+1. Open Anaconda Prompt and go to the project's folder.
+2. Run the following command in the Anaconda Prompt application to create a Conda environment named *http_unittest* for the project.
+    ```
+    (base) $>conda create --name http_unittest python=3.9
+    ```
+3. Once the environment is created, activate a Conda *http_unittest* environment with this command in Anaconda Prompt.
+    ```
+    (base) $>conda activate http_unittest
+    ```
+4. Run the following command to the dependencies in the *http_unittest* environment 
+    ```
+    (http_unittest) $>pip install -r requirements.txt
+    ```
+5. Once the dependencies installation process success, Go to the project's *tests* folder, then run the following command to run the ```test_rdp_http_controller.py``` test suite.
+    ```
+    (http_unittest) $>tests\python -m unittest test_rdp_http_controller
+    ```
+6. To run all test suites (```test_rdp_http_controller.py`` and ```test_app.py``` files), run the following command in the project's *tests* folder.
+    ```
+    (http_unittest) $>tests\python -m unittest discover
+    ```
 
-python -m unittest test_app
-```
+### <a id="python_example_run"></a>Run example test suite in Docker
 
-### Docker
-
-```
-docker build . -t python_unittest
-
-docker run -it --name python_unittest python_unittest
-```
+1. Start Docker
+2. Open a console, then go to the *project root* and run the following command to build a Docker image.
+    ```
+    $> docker build . -t python_unittest
+    ```
+3. Run a Docker container with the following command: 
+    ```
+    $> docker run -it --name python_unittest python_unittest
+    ```
+4. To stop and delete a Docker container, press ``` Ctrl+C``` (or run ```docker stop python_unittest```) then run the following command:
+    ```
+    $> docker rm python_unittest
+    ```
 
 ## <a id="references"></a>References
 
-https://realpython.com/python-testing/
-https://realpython.com/testing-third-party-apis-with-mocks/
+For further details, please check out the following resources:
+* [Refinitiv Data Platform APIs page](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) website.
+* [Refinitiv Data Platform APIs Playground page](https://api.refinitiv.com).
+* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+* [Limitations and Guidelines for the RDP Authentication Service](https://developers.refinitiv.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+* [Getting Started with Refinitiv Data Platform](https://developers.refinitiv.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+* [Python unittest framework official page](https://docs.python.org/3/library/unittest.html).
+* [Responses library page](https://github.com/getsentry/responses).
+* [Python Guide: Testing Your Code](https://docs.python-guide.org/writing/tests/) article.
+* [Getting Started With Testing in Python](https://realpython.com/python-testing/) article.
+* [Mocking External APIs in Python](https://realpython.com/testing-third-party-apis-with-mocks/) article.
+* [How To Use unittest to Write a Test Case for a Function in Python](https://www.digitalocean.com/community/tutorials/how-to-use-unittest-to-write-a-test-case-for-a-function-in-python) article.
+* [Mocking API calls in Python](https://auth0.com/blog/mocking-api-calls-in-python/) article.
+* [How and when to use Unit Testing properly](https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly) post.
+* [13 Tips for Writing Useful Unit Tests](https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368) blog post.
 
-https://pymotw.com/2/unittest/
-
-https://auth0.com/blog/mocking-api-calls-in-python/
-
-https://www.digitalocean.com/community/tutorials/how-to-use-unittest-to-write-a-test-case-for-a-function-in-python
-
-https://stackoverflow.com/questions/62938765/writing-a-unit-test-for-python-rest-api-function
-
-
-https://docs.python.org/3/library/unittest.html
-
-https://web.archive.org/web/20150315073817/http://www.xprogramming.com/testfram.htm
-
-https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368
-
-https://docs.python-guide.org/writing/tests/
-
-https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly
-
-https://en.wikipedia.org/wiki/Mock_object
+For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
 

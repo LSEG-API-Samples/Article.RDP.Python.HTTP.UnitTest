@@ -24,22 +24,22 @@ from rdp_controller import rdp_http_controller
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
+    # A class method called before all tests in an individual class are run
     @classmethod
     def setUpClass(cls):
         # Create an app object for the RDPHTTPController class
         cls.app = rdp_http_controller.RDPHTTPController()
         # Getting the RDP APIs https://api.refinitiv.com base URL. 
         cls.base_URL = config['RDP_BASE_URL']
-        # Loading Mock RDP Auth Token success Response JSON
+        # Loading Mock the RDP Auth Token success Response JSON
         with open('./fixtures/rdp_test_auth_fixture.json', 'r') as auth_fixture_input:
             cls.mock_valid_auth_json = json.loads(auth_fixture_input.read())
         
-        # Mock RDP Auth Token Expire Response JSON
+        # Mock the RDP Auth Token Expire Response JSON
         with open('./fixtures/rdp_test_token_expire_fixture.json', 'r') as auth_expire_fixture_input:
             cls.mock_token_expire_json = json.loads(auth_expire_fixture_input.read())
         
-        # Mock RDP Search Explore request message object
+        # Mock the RDP Search Explore request message object
         cls.search_explore_payload = {
             'View': 'Entities',
             'Filter': '',
@@ -50,7 +50,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_login_rdp_success(self):
         """
-        Test that it can logged in to the RDP Auth Service (using Mock)
+        Test that it can log in to the RDP Auth Service
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
         
@@ -84,10 +84,6 @@ class TestRDPHTTPController(unittest.TestCase):
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
 
-        #Create new access_token
-        # alphabet = string.ascii_letters + string.digits
-        # self.mock_valid_auth_json['access_token'] = ''.join(secrets.choice(alphabet) for i in range(250))
-
         self.mock_valid_auth_json['access_token'] = 'new_access_token_mock1mock2mock3mock4mock5mock6'
 
         mock_rdp_auth = responses.Response(
@@ -115,7 +111,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_login_rdp_invalid(self):
         """
-        Test that it handle some invalid credentials
+        Test that it can handle some invalid credentials
         """
         auth_endpoint = self.base_URL + config['RDP_AUTH_URL']
 
@@ -208,7 +204,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_request_esg_token_expire(self):
         """
-        Test that it can handle token expire requests
+        Test that it can handle token expiration requests
         """
         esg_endpoint = self.base_URL + config['RDP_ESG_URL']
         universe = 'TEST.RIC'
@@ -278,7 +274,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_request_search_explore(self):
         """
-        Test that it can get RIC's meta data via RDP Search Explore service
+        Test that it can get RIC's metadata via the RDP Search Explore Service
         """
         search_endpoint = self.base_URL + config['RDP_SEARCH_EXPLORE_URL']
 
@@ -308,7 +304,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_request_search_explore_token_expire(self):
         """
-        Test that it can handle token expire requests
+        Test that it can handle token expiration requests
         """
         search_endpoint = self.base_URL + config['RDP_SEARCH_EXPLORE_URL']
 

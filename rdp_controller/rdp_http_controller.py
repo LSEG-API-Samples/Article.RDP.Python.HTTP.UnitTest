@@ -9,11 +9,8 @@ class RDPHTTPController():
         self.client_secret = ''
         pass
     
-    # Send HTTP Post request to get Access Token (Password Grant and Refresh Grant) from RDP Auth Service
+    # Send HTTP Post request to get Access Token (Password Grant and Refresh Grant) from the RDP Auth Service
     def rdp_authentication(self, auth_url, username, password, client_id, old_refresh_token = None):
-        """
-        Send Authentication to RDP Auth service
-        """
 
         if not auth_url or not username or not password or not client_id:
             raise TypeError('Received invalid (None or Empty) arguments')
@@ -49,6 +46,7 @@ class RDPHTTPController():
         
         return access_token, refresh_token, expires_in
     
+    # Send HTTP Get request to the RDP ESG Service
     def rdp_request_esg(self, esg_url, access_token, universe):
 
         if not esg_url or not access_token or not universe:
@@ -71,6 +69,7 @@ class RDPHTTPController():
 
         return response.json()
 
+    # Send HTTP Post request to the RDP Search Explore Service
     def rdp_request_search_explore(self, search_url, access_token, payload):
 
         if not search_url or not access_token or not payload:
