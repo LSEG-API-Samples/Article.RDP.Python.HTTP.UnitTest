@@ -1,5 +1,8 @@
+ARG PYTHON_VERSION=3.9.13
+ARG VARIANT=slim-buster
+
 #Build stage, using slim based-image because alpine cannot use Pandas and Matplotlib
-FROM python:3.9.13-slim-buster AS builder
+FROM python:${PYTHON_VERSION}-${VARIANT} AS builder
 
 #Copy requirements.txt
 COPY requirements.txt .
@@ -8,8 +11,10 @@ COPY requirements.txt .
 RUN pip install --user -r requirements.txt
 
 # Run stage, using slim based-image because alpine cannot use Pandas and Matplotlib
-FROM python:3.9.13-slim-buster 
+FROM python:${PYTHON_VERSION}-${VARIANT}  
 WORKDIR /app
+
+LABEL maintainer="Developer Advocate"
 
 # Update PATH environment variable + set Python buffer to make Docker print every message instantly.
 ENV PATH=/root/.local:$PATH \

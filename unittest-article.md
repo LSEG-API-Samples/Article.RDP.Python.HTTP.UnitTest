@@ -313,7 +313,7 @@ A mock is a fake object that is constructed to look and act like real data withi
 
 The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies. By mocking out external dependencies, developers can run tests as often without being affected by any unexpected changes or irregularities of those dependencies. Mocking also helps developers save time and computing resources if they have to test HTTP requests that fetch a lot of data.
 
-This example project uses the [Responses](https://github.com/getsentry/responses) library for mocking the Requests library. 
+This example project uses the [Responses](https://github.com/getsentry/responses) library which is built specifically for mocking the Requests library. 
 
 ### <a id="add_mock_test"></a>Adding a mock Object to the test case
 

@@ -137,6 +137,31 @@ The first step is to unzip or download the example project folder into a directo
     ```
     (http_unittest) $>tests\python -m unittest discover
     ```
+Example Result:
+
+```
+(http_unittest) $>tests\python -m unittest test_rdp_http_controller
+
+RDP authentication failure: 401 Unauthorized
+Text: {"error": "invalid_client", "error_description": "Invalid Application Credential."}
+..Authentication success
+.Authentication success
+.Receive ESG Data from RDP APIs
+.Receive ESG Data from RDP APIs
+..RDP APIs: ESG data request failure: 401 Unauthorized
+Text: {"error": {"id": "XXXXXXXXXX", "code": "401", "message": "token expired", "status": "Unauthorized"}}
+.Receive Search Explore Data from RDP APIs
+.RDP APIs: Search Explore request failure: 400 Bad Request
+Text: {"error": {"id": "00000000-0000-0000-0000-000000000000", "code": "400", "message": "Validation error", "status": "Bad Request", "errors": [{"key": "json", "reason": "json.View in body should be one of [CatalogItems Entities]"}]}}
+.Receive Search Explore Data from RDP APIs
+..RDP APIs: Search Explore request failure: 401 Unauthorized
+Text: {"error": {"id": "XXXXXXXXXX", "code": "401", "message": "token expired", "status": "Unauthorized"}}
+.
+----------------------------------------------------------------------
+Ran 13 tests in 0.031s
+
+OK
+```
 
 ### <a id="docker_example_run"></a>Run example test suite in Docker
 
@@ -153,13 +178,25 @@ The first step is to unzip or download the example project folder into a directo
     ```
     $> docker rm python_unittest
     ```
+
+
+
+That covers how to run an example test suite.
+
 ## <a id="summary"></a>Conclusion and Next Steps
 
-**To Add Conclusion and Next Steps here.**
+Unit testing is now the mandatory process of a software development lifecycle for both modern and legacy applications. It helps to expose unintentional behaviors of a tiny part of the application quicker than trying to find bugs in a big complex phase. It speeds up the overall feedback loop and improves trust among the project team. Unit testing also helps improves application source code quality, developers have more confidence in refactoring the source code for better performance and cleaner code. As the author of this article, I also have learned a lot from this project. There are a lot of error handlers or code logic that I never think of until I started to write unit test cases. 
+
+This example project demonstrates the manual unit testing method. However, developers should run unit test cases automatically every time they made changes to the code (or configurations). The most practical technique is running automated unit tests as part of the developers' Continuous Integration/Continuous Delivery (CI/CD) pipeline. Developers can apply the TDD (Test-driven development) practice that writing and correcting the failed tests before writing new code with their project too.
+
+The [unittest](https://docs.python.org/3.9/library/unittest.html) framework and [Responses](https://github.com/getsentry/responses) mocking library are very good starting points to learn a unit test with [Python](https://www.python.org/) and build a simple test suite to test HTTP operations source code. If developers need more advanced features, they can explore other Python unit test frameworks such as [pytest](https://docs.pytest.org/en/7.1.x/), [nose2](https://github.com/nose-devs/nose2), or [doctest](https://github.com/doctest/doctest).
+
+At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various Refinitiv data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
+
 
 ## <a id="references"></a>References
 
-For further details, please check out the following resources:
+That brings me to the end of my unit test example project. For further details, please check out the following resources:
 * [Refinitiv Data Platform APIs page](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) website.
 * [Refinitiv Data Platform APIs Playground page](https://api.refinitiv.com).
 * [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
