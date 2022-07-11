@@ -26,6 +26,8 @@ This demo project is not cover all test cases for the HTTP operations and all RD
 
 A unit test helps developers to isolate what is broken in their application easier and faster than testing an entire system as a whole. It is the first level of testing done during the development process before integration testing. It is mostly done by the developers automated or manually to verify their code.
 
+![figure-1](images/01_unittest.png "Unit Testing Life Cycle")
+
 You can find more detail about the unit test concept from the following resources:
 - [Python Guide: Testing Your Code](https://docs.python-guide.org/writing/tests/) article.
 - [How and when to use Unit Testing properly](https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly) post.
@@ -90,9 +92,12 @@ RDP APIs give developers seamless and holistic access to all of the Refinitiv co
 
 This example project is focusing on the Request-Response: RESTful web service delivery method only.  
 
+![figure-2](images/02_rdp.png "Refinitiv Data Platform")
+
 For more detail regarding the Refinitiv Data Platform, please see the following APIs resources: 
 - [Quick Start](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/quick-start) page.
 - [Tutorials](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials) page.
+
 
 ## <a id="testsuite_detail"></a>Test Suit Development Detail
 
@@ -129,11 +134,11 @@ The first step is to unzip or download the example project folder into a directo
     ```
     (http_unittest) $>pip install -r requirements.txt
     ```
-5. Once the dependencies installation process success, Go to the project's *tests* folder, then run the following command to run the ```test_rdp_http_controller.py``` test suite.
+5. Once the dependencies installation process is success, Go to the project's *tests* folder, then run the following command to run the ```test_rdp_http_controller.py``` test suite.
     ```
     (http_unittest) $>tests\python -m unittest test_rdp_http_controller
     ```
-6. To run all test suites (```test_rdp_http_controller.py`` and ```test_app.py``` files), run the following command in the project's *tests* folder.
+6. To run all test suites (```test_rdp_http_controller.py``` and ```test_app.py``` files), run the following command in the project's *tests* folder.
     ```
     (http_unittest) $>tests\python -m unittest discover
     ```
@@ -178,8 +183,7 @@ OK
     ```
     $> docker rm python_unittest
     ```
-
-
+![figure-3](images/03_docker_run_result.gif "Refinitiv Data Platform")
 
 That covers how to run an example test suite.
 
@@ -187,12 +191,13 @@ That covers how to run an example test suite.
 
 Unit testing is now the mandatory process of a software development lifecycle for both modern and legacy applications. It helps to expose unintentional behaviors of a tiny part of the application quicker than trying to find bugs in a big complex phase. It speeds up the overall feedback loop and improves trust among the project team. Unit testing also helps improves application source code quality, developers have more confidence in refactoring the source code for better performance and cleaner code. As the author of this article, I also have learned a lot from this project. There are a lot of error handlers or code logic that I never think of until I started to write unit test cases. 
 
-This example project demonstrates the manual unit testing method. However, developers should run unit test cases automatically every time they made changes to the code (or configurations). The most practical technique is running automated unit tests as part of the developers' Continuous Integration/Continuous Delivery (CI/CD) pipeline. Developers can apply the TDD (Test-driven development) practice that writing and correcting the failed tests before writing new code with their project too.
+This example project demonstrates the manual unit testing method. However, developers should run unit test cases automatically every time they made changes to the code (or configurations). The most practical technique is running automated unit tests as part of the developers' Continuous Integration/Continuous Delivery (CI/CD) pipeline. Developers can apply the TDD (Test-driven development) approach that writing and correcting the failed tests before writing new code with their project too.
+
+![figure-4](images/04_tdd.png "TDD Life Cycle")
 
 The [unittest](https://docs.python.org/3.9/library/unittest.html) framework and [Responses](https://github.com/getsentry/responses) mocking library are very good starting points to learn a unit test with [Python](https://www.python.org/) and build a simple test suite to test HTTP operations source code. If developers need more advanced features, they can explore other Python unit test frameworks such as [pytest](https://docs.pytest.org/en/7.1.x/), [nose2](https://github.com/nose-devs/nose2), or [doctest](https://github.com/doctest/doctest).
 
 At the same time, the [Refinitiv Data Platform (RDP) APIs](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) provide various Refinitiv data and content for developers via an easy-to-use Web-based API. The APIs are easy to integrate into any application and platform that supports the HTTP protocol and JSON message format. 
-
 
 ## <a id="references"></a>References
 
