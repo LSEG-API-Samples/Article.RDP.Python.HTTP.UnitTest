@@ -1,4 +1,4 @@
-# Getting Start Unit Test for HTTP REST API Application with Python
+# Getting Start Unit Test for an HTTP REST Application with Python
 - version: 1.0
 - Last update: Jul 2022
 - Environment: Windows
