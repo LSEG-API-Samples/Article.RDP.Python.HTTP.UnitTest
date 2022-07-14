@@ -57,7 +57,7 @@ Please find more detail about the unittest framework from the following resource
 
 ## <a id="rdp_workflow"></a>RDP APIs Application Workflow
 
-Refinitiv Data Platform entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API's. 
+Refinitiv Data Platform entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API. 
 
 The API requires the following access credential information:
 - Username: The username. 
@@ -184,7 +184,7 @@ from rdp_controller import rdp_http_controller
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
+    # A class method called before all tests in an individual class are run
     @classmethod
     def setUpClass(cls):
         # Create an app object for the RDPHTTPController class
@@ -286,7 +286,7 @@ Text: {"error":"invalid_client"  ,"error_description":"Invalid Application Crede
 E
 ======================================================================
 ERROR: test_login_rdp_success (test_rdp_http_controller.TestRDPHTTPController)
-Test that it can logged in to the RDP Auth Service
+Test that it can log in to the RDP Auth Service
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "....\rdp_python_unittest\tests\test_rdp_http_controller.py", line 72, in test_login_rdp_success
@@ -347,7 +347,7 @@ from rdp_controller import rdp_http_controller
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
+    # A class method called before all tests in an individual class are run
     @classmethod
     def setUpClass(cls):
         # Create an app object for the RDPHTTPController class
@@ -378,7 +378,7 @@ import os
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
+    # A class method called before all tests in an individual class are run
     @classmethod
     def setUpClass(cls):
         ...
@@ -470,7 +470,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_login_rdp_invalid(self):
         """
-        Test that it handle some invalid credentials
+        Test that it can handle some invalid credentials
         """
         ...
         with self.assertRaises(requests.exceptions.HTTPError) as exception_context:
@@ -675,7 +675,7 @@ All RDP data services use the same token expire error message, so we load this f
 
 class TestRDPHTTPController(unittest.TestCase):
 
-    # A class method called before tests in an individual class are run
+    # A class method called before all tests in an individual class are run
     @classmethod
     def setUpClass(cls):
         # Set up previous class variables
@@ -728,7 +728,7 @@ class TestRDPHTTPController(unittest.TestCase):
     @responses.activate
     def test_request_esg_token_expire(self):
         """
-        Test that it can handle token expire requests
+        Test that it can handle token expiration requests
         """
         # Previous code
         ...
@@ -748,8 +748,7 @@ class TestRDPHTTPController(unittest.TestCase):
   
 ```
 
-The other common RDP APIs failure scenarios is the application sends the request message to RDP without the access token in the HTTP request' header. However, the *access token* is one of the ```rdp_request_esg()``` method required parameters. If the access token is not presented (None or Empty), the method raise the TypeError exception and not send HTTP request message to the RDP. The ```test_request_esg_none_empty()``` method is the one that covers this test case.
-
+The other common RDP APIs failure scenario is the application sends the request message to RDP without the access token in the HTTP request header. However, the *access token* is one of the ```rdp_request_esg()``` method required parameters. If the access token is not presented (None or Empty), the method raises the TypeError exception and does not send an HTTP request message to the RDP. The ```test_request_esg_none_empty()``` method is the one that covers this test case.
 
 ### <a id="unittest_rdp_esg_invalid"></a>Testing Requesting RDP ESG data with an invalid item
 
