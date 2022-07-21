@@ -220,3 +220,6 @@ That brings me to the end of my unit test example project. For further details, 
 
 For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
 
+## Developers Articles
+
+* [Getting Start Unit Test for an HTTP REST Application with Python](https://developers.refinitiv.com/en/article-catalog/article/getting-start-unit-test-for-an-http-rest-application-with-python) article.
