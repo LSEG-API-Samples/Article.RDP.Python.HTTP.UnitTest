@@ -223,3 +223,4 @@ For any questions related to Refinitiv Data Platform APIs, please use the [RDP A
 ## Developers Articles
 
 * [Getting Start Unit Test for an HTTP REST Application with Python](https://developers.refinitiv.com/en/article-catalog/article/getting-start-unit-test-for-an-http-rest-application-with-python) article.
+* [Getting Start With Unit Test for an HTTP REST Application with Python](https://wasin-waeosri.medium.com/getting-start-unit-test-for-an-http-rest-application-with-python-c57810cc4e56) Medium blog post.
