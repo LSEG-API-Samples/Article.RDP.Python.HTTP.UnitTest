@@ -62,7 +62,7 @@ if __name__ == '__main__':
             sys.exit(1)
         
         esg_data = None
-        esg_data = rdp_controller.rdp_getESG(esg_endpoint, access_token, universe)
+        esg_data = rdp_controller.rdp_request_esg(esg_endpoint, access_token, universe)
         if not esg_data:
             print(f'No ESG data for {universe}, exiting application')
         
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             'Filter': f'RIC eq \'{universe}\'',
             'Select': 'IssuerCommonName,DocumentTitle,RCSExchangeCountryLeaf,IssueISIN,ExchangeName,ExchangeCode,SearchAllCategoryv3,RCSTRBC2012Leaf'
         }
-        company_data = rdp_controller.rdp_getSearchExplore(search_endpoint, access_token, search_payload)
+        company_data = rdp_controller.rdp_request_search_explore(search_endpoint, access_token, search_payload)
         if not company_data:
             print(f'No Meta data for {universe}, exiting application')
         print(f'RIC: {universe} Metadata:')

@@ -1,6 +1,6 @@
 # Getting Start Unit Test for an HTTP REST Application with Python
-- version: 1.0
-- Last update: Jul 2022
+- version: 1.1
+- Last update: Jan 2023
 - Environment: Windows
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
