@@ -128,8 +128,8 @@ The first step is to unzip or download the example project folder into a directo
     $>python -m venv http_unittest
     ```
 3. Once the environment is created, activate a virtual environment *http_unittest* environment with this command .
-    ```
-   $>http_unittest\Script\activate
+    ```bash
+   $>http_unittest\Scripts\activate
     ```
 4. Run the following command to the dependencies in the *http_unittest* environment 
     ```
