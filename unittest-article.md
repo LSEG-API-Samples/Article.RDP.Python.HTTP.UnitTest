@@ -1,11 +1,11 @@
 # Getting Start Unit Test for HTTP REST API Application with Python
-- version: 1.0
-- Last update: Jul 2022
+- version: 2.0
+- Last update: Feb 2025
 - Environment: Windows
 - Prerequisite: [Access to RDP credentials](#prerequisite)
 
 Example Code Disclaimer:
-ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. REFINITIV MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.
+ALL EXAMPLE CODE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS FOR ILLUSTRATIVE PURPOSES ONLY. LSEG MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE EXAMPLE CODE, OR THE INFORMATION, CONTENT, OR MATERIALS USED IN CONNECTION WITH THE EXAMPLE CODE. YOU EXPRESSLY AGREE THAT YOUR USE OF THE EXAMPLE CODE IS AT YOUR SOLE RISK.
 
 ## <a id="unittest_intro"></a>Introduction to Python Unittest framework
 
@@ -57,7 +57,7 @@ Please find more detail about the unittest framework from the following resource
 
 ## <a id="rdp_workflow"></a>RDP APIs Application Workflow
 
-Refinitiv Data Platform entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API. 
+RDP APIs entitlement check is based on OAuth 2.0 specification. The first step of an application workflow is to get a token from RDP Auth Service, which will allow access to the protected resource, i.e. data REST API. 
 
 The API requires the following access credential information:
 - Username: The username. 
@@ -70,8 +70,8 @@ Once the authentication success, the function gets the RDP Auth service response
 - **expires_in**: Access token validity time in seconds.
 
 Next, after the application received the Access Token (and authorization token) from RDP Auth Service, all subsequent REST API calls will use this token to get the data. Please find more detail regarding RDP APIs workflow in the following resources:
-- [RDP APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api) page.
-- [RDP APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens) page.
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en//api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api) page.
+- [RDP APIs: Authorization - All about tokens](https://developers.lseg.com/en//api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens) page.
 
 ## <a id="project_info"></a>Project Structure
 
@@ -498,11 +498,11 @@ That brings us to requesting the RDP APIs data. All subsequent REST API calls us
 
 Please notice *the space* between the ```Bearer``` and ```RDP Access Token``` values.
 
-The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from Refinitiv Data Platform's [API Playground page](https://api.refinitiv.com/) - which is an interactive documentation site developers can access once they have a valid Refinitiv Data Platform account.
+The application then creates a request message in a JSON message format or URL query parameter based on the interested service and sends it as an HTTP request message to the Service Endpoint. Developers can get RDP APIs the Service Endpoint, HTTP operations, and parameters from RDP's [API Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs) - which is an interactive documentation site developers can access once they have a valid RDP account.
 
 The example console application consumes content from the following RDP Services:
-- ESG Service ```/data/environmental-social-governance/<version>/views/scores-full``` endpoint that provides full coverage of Refinitiv's proprietary ESG Scores with full history for consumers.
-- Discovery Search Explore Service ```/discover/search/<version>/explore``` endpoint that explore Refinitiv data based on searching options.
+- ESG Service ```/data/environmental-social-governance/<version>/views/scores-full``` endpoint that provides full coverage of LSEG's proprietary ESG Scores with full history for consumers.
+- Discovery Search Explore Service ```/discover/search/<version>/explore``` endpoint that explore LSEG data based on searching options.
 
 However, this development article covers the ESG Service test cases only. The Discovery Search Explore Service's test cases have the same test logic as the ESG's test cases.
 
@@ -828,20 +828,21 @@ Please see how to run the project test suit in the [README.md](README.md#how_to_
 ## <a id="references"></a>References
 
 For further details, please check out the following resources:
-* [Refinitiv Data Platform APIs page](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) website.
-* [Refinitiv Data Platform APIs Playground page](https://api.refinitiv.com).
-* [Refinitiv Data Platform APIs: Introduction to the Request-Response API](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
-* [Refinitiv Data Platform APIs: Authorization - All about tokens](https://developers.refinitiv.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
-* [Limitations and Guidelines for the RDP Authentication Service](https://developers.refinitiv.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
-* [Getting Started with Refinitiv Data Platform](https://developers.refinitiv.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
-* [Python unittest framework official page](https://docs.python.org/3/library/unittest.html).
-* [Responses library page](https://github.com/getsentry/responses).
-* [Python Guide: Testing Your Code](https://docs.python-guide.org/writing/tests/) article.
-* [Getting Started With Testing in Python](https://realpython.com/python-testing/) article.
-* [Mocking External APIs in Python](https://realpython.com/testing-third-party-apis-with-mocks/) article.
-* [How To Use unittest to Write a Test Case for a Function in Python](https://www.digitalocean.com/community/tutorials/how-to-use-unittest-to-write-a-test-case-for-a-function-in-python) article.
-* [Mocking API calls in Python](https://auth0.com/blog/mocking-api-calls-in-python/) article.
-* [How and when to use Unit Testing properly](https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly) post.
-* [13 Tips for Writing Useful Unit Tests](https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368) blog post.
 
-For any questions related to Refinitiv Data Platform APIs, please use the [RDP APIs Forum](https://community.developers.refinitiv.com/spaces/231/index.html) on the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
+- [RDP APIs page](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) website.
+- [RDP APIs Playground page](https://apidocs.refinitiv.com/Apps/ApiDocs).
+- [RDP APIs: Introduction to the Request-Response API](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#introduction-to-the-request-response-api).
+- [RDP APIs - All about tokens](https://developers.lseg.com/en/api-catalog/refinitiv-data-platform/refinitiv-data-platform-apis/tutorials#authorization-all-about-tokens).
+- [Limitations and Guidelines for the RDP Authentication Service](https://developers.lseg.com/en/article-catalog/article/limitations-and-guidelines-for-the-rdp-authentication-service) article.
+- [Getting Started with Data Platform](https://developers.lseg.com/en/article-catalog/article/getting-start-with-refinitiv-data-platform) article.
+- [Python unittest framework official page](https://docs.python.org/3/library/unittest.html).
+- [Responses library page](https://github.com/getsentry/responses).
+- [Python Guide: Testing Your Code](https://docs.python-guide.org/writing/tests/) article.
+- [Getting Started With Testing in Python](https://realpython.com/python-testing/) article.
+- [Mocking External APIs in Python](https://realpython.com/testing-third-party-apis-with-mocks/) article.
+- [How To Use unittest to Write a Test Case for a Function in Python](https://www.digitalocean.com/community/tutorials/how-to-use-unittest-to-write-a-test-case-for-a-function-in-python) article.
+- [Mocking API calls in Python](https://auth0.com/blog/mocking-api-calls-in-python/) article.
+- [How and when to use Unit Testing properly](https://softwareengineering.stackexchange.com/questions/89064/how-and-when-to-use-unit-testing-properly) post.
+- [13 Tips for Writing Useful Unit Tests](https://betterprogramming.pub/13-tips-for-writing-useful-unit-tests-ca20706b5368) blog post.
+
+For any questions related to RDP APIs, please use the [Developers Community Q&A page](https://community.developers.refinitiv.com/).
