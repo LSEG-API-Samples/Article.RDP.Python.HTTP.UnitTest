@@ -122,7 +122,7 @@ The first step is to unzip or download the example project folder into a directo
 
 ### <a id="python_example_run"></a>Run example test suite in a console
 
-1. Open Anaconda Prompt and go to the project's folder.
+1. Open a Command Prompt and go to the project's folder.
 2. Run the following command in the Command Prompt application to create a Python Virtual environment named *http_unittest* for the project.
     ```
     $>python -m venv http_unittest
