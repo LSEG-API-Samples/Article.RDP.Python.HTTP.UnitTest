@@ -109,7 +109,7 @@ Please see the full details over the test suite implementation on the [unittest-
 This demo project requires the following dependencies.
 
 1. RDP Access credentials.
-2. Python [Anaconda](https://www.anaconda.com/distribution/) or [MiniConda](https://docs.conda.io/en/latest/miniconda.html) distribution/package manager.
+2. [Python](https://www.python.org/) 3.10 and above
 3. [Docker Desktop/Engine](https://docs.docker.com/get-docker/) application for running the test suite with Docker.
 5. Internet connection.
 
@@ -123,13 +123,13 @@ The first step is to unzip or download the example project folder into a directo
 ### <a id="python_example_run"></a>Run example test suite in a console
 
 1. Open Anaconda Prompt and go to the project's folder.
-2. Run the following command in the Anaconda Prompt application to create a Conda environment named *http_unittest* for the project.
+2. Run the following command in the Command Prompt application to create a Python Virtual environment named *http_unittest* for the project.
     ```
-    (base) $>conda create --name http_unittest python=3.9
+    $>python -m venv http_unittest
     ```
-3. Once the environment is created, activate a Conda *http_unittest* environment with this command in Anaconda Prompt.
+3. Once the environment is created, activate a virtual environment *http_unittest* environment with this command .
     ```
-    (base) $>conda activate http_unittest
+   $>http_unittest\Script\activate
     ```
 4. Run the following command to the dependencies in the *http_unittest* environment 
     ```
