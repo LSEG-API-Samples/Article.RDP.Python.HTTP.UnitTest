@@ -7,7 +7,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2025.1
 PyYAML==6.0.2
-requests==2.32.3
+requests==2.32.4
 responses==0.25.6
 six==1.17.0
 tzdata==2025.1
